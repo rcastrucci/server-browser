@@ -7,6 +7,22 @@ if (!function_exists('str_contains')) {
     }
 }
 
+/* AUTHENTICATE USER */
+if (isset($_POST['u']) && isset($_POST['p'])) {
+    $dbUsers = new Csv();
+    $dbUsers->setFile('.users.csv');
+    $myDB = $dbUsers->getContent();
+
+    if ($myDB) {
+        $_SESSION['user'] = new User();
+        $_SESSION['user']->setInputUser(strtolower($_POST['u']));
+        $_SESSION['user']->setInputPass($_POST['p']);
+        if ($_SESSION['user']->authenticate($myDB)) {
+            $_SESSION['user']->getFiles();
+        }
+    }
+}
+
 /* REQUEST LOGOUT */
 if (isset($_GET['logout'])) {
     $_SESSION['user']->logout();
@@ -25,7 +41,7 @@ if (isset($_GET['back'])) {
 }
 
 /* REQUEST TO DOWNLOAD FILE OR FOLDER */
-if(isset($_REQUEST["file"]) && $_SESSION['ACCESS'] && isset($_SESSION['user']) && $_SESSION['user']->isLogged()) {
+if(isset($_REQUEST["file"]) && $_SESSION['user']->isLogged()) {
     // Get parameters
     $file = urldecode($_REQUEST["file"]); // Decode URL-encoded string
 
@@ -49,18 +65,6 @@ if(isset($_REQUEST["file"]) && $_SESSION['ACCESS'] && isset($_SESSION['user']) &
     } else {
         http_response_code(404);
         die();
-    }
-}
-
-/* AUTHENTICATE USER */
-if (isset($_POST['u']) && isset($_POST['p'])) {
-    $usersCsvFile = new Csv();
-    $usersCsvFile->setFile('.users.csv');
-
-    if ($usersCsvFile->getContent()) {
-        $_SESSION['user'] = new User();
-        $_SESSION['user']->readFromCsv($usersCsvFile->getContent(), strtolower($_POST['u']), $_POST['p']);
-        $_SESSION['user']->getFiles();
     }
 }
 

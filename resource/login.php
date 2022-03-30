@@ -12,7 +12,7 @@ include('./resource/head.php');
                 <section class="d-flex flex-column col-sm-9 col-md-9 col-lg-6 text-center max-width-inner">
                     <span class="display-6 text-muted fs-6 mb-4"><?PHP echo($_SESSION['config']->getSubTitle()); ?></span>
 
-                    <form id="login_form" method="post" name="form" action="./" autocomplete="off" onSubmit="submitForm();">
+                    <form id="login_form" method="post" name="form" action="../index.php" autocomplete="off" onSubmit="submitForm();">
                         <input class="w-100 mb-2 mt-2" id="user_name" name="u" type="text" placeholder="User" required="required">
                         <input class="w-100 mt-2" id="user_pass" type="password" name="p" placeholder="Password" required="required">
                         <div class="col-12 d-flex justify-content-center">
@@ -39,7 +39,7 @@ include('./resource/head.php');
     
     <!-- SCRIPTS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-    <script src="./js/sha256.js"></script>
-    <script src="./js/functions.js"></script>
+    <script src="../js/sha256.js"></script>
+    <script src="../js/functions.js"></script>
 </body>
 </html>

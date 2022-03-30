@@ -9,11 +9,11 @@ $_SESSION['config'] = new Config();
 $_SESSION['config']->setConfig($configFile->getContent());
 /************************* END SET UP **************************/
 
-/**************************************** RETURN CONTENT OR LOGIN PAGE ************************************************/
-if (isset($_SESSION['ACCESS']) && $_SESSION['ACCESS'] && isset($_SESSION['user'])) {
+/*********************** RETURN CONTENT OR LOGIN PAGE *******************************/
+if (isset($_SESSION['user']) && $_SESSION['user']->isLogged()) {
     include('./resource/content.php');
 } else {
     include('./resource/login.php');
 }
-/************************************************ END OF DOCUMENT *****************************************************/
+/******************************* END OF DOCUMENT ************************************/
 ?>

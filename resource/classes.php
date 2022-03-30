@@ -20,7 +20,7 @@ class Csv {
 
     function load() {
         if (($this->filename !== null) && file_exists($this->filename)) {
-            $this->csvContent = [];
+            $this->csvContent = array();
             $csvFiles = fopen($this->filename, "r");
             if ($csvFiles) {
                 while(! feof($csvFiles)) {
@@ -28,6 +28,8 @@ class Csv {
                 }
             }
             fclose($csvFiles);
+        } else {
+            $this->csvContent = array();
         }
     }
 }
@@ -51,7 +53,11 @@ class User {
         return $this->userFiles;
     }
     function countLevel() {
-        return count($this->userLevel);
+        if (is_array($this->userLevel)) {
+            return count($this->userLevel);
+        } else {
+            return 0;
+        }
     }
     function getLevel() {
         $realPath = $this->userFolder;
@@ -97,10 +103,10 @@ class User {
     function setInputPass($inputPass) {
         $this->inputPass = $inputPass;
     }
-    function readFromCsv($csvContent, $userName, $userPass) {
+    function authenticate($csvContent) {
         foreach ($csvContent as $value) {
             if ($value) {
-                if ($userName === $value[3] && ($userPass === $value[5])) {
+                if ($this->inputUser === $value[3] && ($this->inputPass === $value[5])) {
                     $this->userCompany = $value[0];
                     $this->userFolder = $value[1];
                     $this->userLevel = array();
@@ -117,7 +123,12 @@ class User {
         }
     }
     function isLogged() {
-        return ($this->userName === $this->inputUser && $this->userPass === $this->inputPass);
+        return ($this->userName !== null && 
+                $this->userName !== '' &&
+                $this->userPass !== null && 
+                $this->userPass !== '' &&
+                $this->userName === $this->inputUser && 
+                $this->userPass === $this->inputPass);
     }
     function logout() {
         $this->userCompany = null;
