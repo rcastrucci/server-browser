@@ -45,7 +45,7 @@ if(isset($_REQUEST["file"]) && $_SESSION['ACCESS'] && isset($_SESSION['user']) &
         readfile($filepath);
         die();
     } else if (is_dir($filepath)) {
-        downloadZip($filepath);
+        http_response_code(403);
     } else {
         http_response_code(404);
         die();
@@ -61,53 +61,6 @@ if (isset($_POST['u']) && isset($_POST['p'])) {
         $_SESSION['user'] = new User();
         $_SESSION['user']->readFromCsv($usersCsvFile->getContent(), strtolower($_POST['u']), $_POST['p']);
         $_SESSION['user']->getFiles();
-    }
-}
-
-/* FUNCTION TO ZIPARCHIVE A FOLDER */
-function downloadZip($folder) {
-    $zip_file = $folder.'.zip';
-
-    // Get real path for our folder
-    $rootPath = realpath($folder);
-
-    // Initialize archive object
-    $zip = new ZipArchive();
-    $zip->open($zip_file, ZipArchive::CREATE | ZipArchive::OVERWRITE);
-
-    // Create recursive directory iterator
-    /** @var SplFileInfo[] $files */
-    $files = new RecursiveIteratorIterator(
-        new RecursiveDirectoryIterator($rootPath),
-        RecursiveIteratorIterator::LEAVES_ONLY
-    );
-
-    foreach ($files as $file) {
-        // Skip directories (they would be added automatically)
-        if (!$file->isDir())
-        {
-            // Get real and relative path for current file
-            $filePath = $file->getRealPath();
-            $relativePath = substr($filePath, strlen($rootPath) + 1);
-
-            // Add current file to archive
-            $zip->addFile($filePath, $relativePath);
-        }
-    }
-
-    // Zip archive will be created only after closing object
-    $zip->close();
-    header('Content-Description: File Transfer');
-    header('Content-Type: application/octet-stream');
-    header('Content-Disposition: attachment; filename='.basename($zip_file));
-    header('Content-Transfer-Encoding: binary');
-    header('Expires: 0');
-    header('Cache-Control: must-revalidate');
-    header('Pragma: public');
-    header('Content-Length: ' . filesize($zip_file));
-    flush(); // Flush system output buffer
-    if (readfile($zip_file)) {
-        unlink($zip_file);
     }
 }
 
