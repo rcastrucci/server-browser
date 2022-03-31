@@ -57,7 +57,7 @@ class Csv {
 }
 
 class User {
-    public static $filename = './.users.csv';
+    public static $filename = '.users.csv';
     private $userName;
     private $userFullName;
     private $userEmail;
@@ -184,7 +184,7 @@ class User {
 }
 
 class Config {
-    public static $filename = './.config.csv';
+    public static $filename = '.config.csv';
     private $author;
     private $description;
     private $title;
