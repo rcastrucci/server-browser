@@ -1,35 +1,24 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
 
-:root {
-    /* PURPLE */
-    --purple-50: #f3f2ff;	 
-    --purple-100: #c8c2ff;	 
-    --purple-200: #a491ff;	 	 	
-    --purple-300: #8561ff;	 	 	
-    --purple-400: #6b31ff;	 	 	
-    --purple-500: #50f;	 	 	
-    --purple-600: #4100cf;	 	 	 	 
-    --purple-700: #30009f;		 	
-    --purple-800: #210070;	 	 	
-    --purple-900: #130040;	  	
+:root { 	
     /* GRAY */
     --gray-50: #fff;
     --gray-100: #fafafa;	 
     --gray-200: #f5f5f5; 
     --gray-300: #e8e8e8;
     --gray-400: #d9d9d9;
-    --gray-500: #bfbfbf;
-    --gray-600: #8c8c8c;
-    --gray-700: #595959;
-    --gray-800: #262626;
-    --gray-900: #000;	
+    --gray-500: #909090;
+    --gray-600: #505050;
+    --gray-700: #353436;
+    --gray-800: #2D2C2E;
+    --gray-900: #1E1E1F;	
     /* STANDARD COLORS */
-    --primary-color: #50f;
+    --primary-color: rgb(72, 92, 131);
     --secondary-color: #fff;
     --success-color: #52c41a;
     --error-color: #f5222d;
     --warning-color: #faad14;
-    --main-background: #fafafa;
+    --main-background: #323234;
 }
 
 /* reset CSS */
@@ -46,15 +35,16 @@ html {
 body {
     font-family: 'Inter', sans-serif;
     background-color: var(--main-background);
+    color: var(--gray-200);
 }
 
 a {
     text-decoration: none;
-    color: var(--purple-700);
+    color: var(--gray-500);
 }
 
 a:hover {
-    color: var(--purple-400);
+    color: var(--gray-200);
 }
 
 td a {
@@ -71,7 +61,10 @@ input {
     outline: none;
     border: solid;
     border-color: var(--gray-500);
-    border-radius: 10px;
+    border-width: .5px;
+    background-color: var(--main-background);
+    color: var(--gray-200);
+    border-radius: 20px;
     height: 35px;
     padding: 20px;
     font-size: 1.5rem;
@@ -85,14 +78,14 @@ button {
     padding: 5px;
     font-size: 1.2rem;
     font-weight: 400;
-    background-color: var(--purple-600);
+    background-color: var(--gray-800);
     color: var(--gray-300);
     width: 200px;
 }
 
 button:hover {
-    background-color: var(--purple-400);
-    color: var(--gray-100);
+    background-color: var(--gray-500);
+    color: var(--gray-200);
 }
 
 table tbody tr {
@@ -134,17 +127,17 @@ table tbody tr {
     border: solid;
     border-radius: 30px;
     text-align: center;
-    background-color: var(--purple-600);
-    color: var(--gray-300);
-    border-color: var(--purple-500);
+    background-color: var(--gray-500);
+    color: var(--gray-200);
+    border-color: var(--gray-600);
     max-width: 100px;
 }
 
 .btn-down:hover {
     cursor: pointer;
-    background-color: var(--purple-400);
-    color: var(--gray-100);
-    border-color: var(--purple-500);
+    background-color: var(--gray-200);
+    color: var(--gray-500);
+    border-color: var(--gray-600);
 }
 
 .icon {
