@@ -10,7 +10,7 @@ if (!function_exists('str_contains')) {
 /* AUTHENTICATE USER */
 if (isset($_POST['u']) && isset($_POST['p'])) {
     $dbUsers = new Csv();
-    $dbUsers->setFile('.users.csv');
+    $dbUsers->setFile(User::$filename);
     $myDB = $dbUsers->getContent();
 
     if ($myDB) {
@@ -24,7 +24,7 @@ if (isset($_POST['u']) && isset($_POST['p'])) {
 }
 
 /* REQUEST LOGOUT */
-if (isset($_GET['logout'])) {
+if (isset($_GET['logout']) && isset($_SESSION['user']) && $_SESSION['user']->isLogged()) {
     $_SESSION['user']->logout();
 }
 
@@ -66,6 +66,38 @@ if(isset($_REQUEST["file"]) && $_SESSION['user']->isLogged()) {
         http_response_code(404);
         die();
     }
+}
+
+if (!file_exists(Config::$filename)) {
+    /* CREATE NEW CSV FILE CONFIG WITH DEFAULT VALUES */
+    $config = new Csv();
+    $config->setFile(Config::$filename);
+    $config->setContent([
+        ['name','value'],
+        ['title','WebCloud'],
+        ['subtitle','CLIENTS LOGIN'],
+        ['author','dev rcastrucci'],
+        ['description','webcloud clients service']
+    ]);
+    unset($config);
+}
+
+if (!isset($_SESSION['config'])) {
+    $configFile = new Csv();
+    $configFile->setFile(Config::$filename);
+    $_SESSION['config'] = new Config();
+    $_SESSION['config']->setConfig($configFile->getContent());
+}
+
+if (!file_exists(User::$filename)) {
+    /* CREATE NEW CSV FILE USERS WITH DEFAULT VALUES */
+    $usersDb = new Csv();
+    $usersDb->setFile(User::$filename);
+    $usersDb->setContent([
+        ['client','folder','name','username','email','pass'],
+        ['Admin','../','User Full Name','admin','user@email.com','8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918']
+    ]);
+    unset($usersDb);
 }
 
 /* FUNCTION TO GET FOLDER SIZE */

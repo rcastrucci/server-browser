@@ -14,11 +14,11 @@ class Csv {
     }
 
     function getContent() {
-        $this->load();
+        $this->loadCsv();
         return $this->csvContent;
     }
 
-    function load() {
+    function loadCsv() {
         if (($this->filename !== null) && file_exists($this->filename)) {
             $this->csvContent = array();
             $csvFiles = fopen($this->filename, "r");
@@ -32,9 +32,30 @@ class Csv {
             $this->csvContent = array();
         }
     }
+
+    function setContent($data) {
+        if (($this->filename !== null) && ($data) && is_array($data)) {
+            // open csv file for writing
+            $file = fopen($this->filename, 'w');
+            if ($file) {
+                // write each row at a time to a file
+                foreach ($data as $row) {
+                    fputcsv($file, $row);
+                }
+                // close the file
+                fclose($file);
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
 }
 
 class User {
+    public static $filename = './.users.csv';
     private $userName;
     private $userFullName;
     private $userEmail;
@@ -161,6 +182,7 @@ class User {
 }
 
 class Config {
+    public static $filename = './.config.csv';
     private $author;
     private $description;
     private $title;
