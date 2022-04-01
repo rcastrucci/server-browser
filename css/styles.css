@@ -47,10 +47,34 @@ a:hover {
     color: var(--gray-200);
 }
 
+table thead th {
+    color: var(--gray-500); 
+}
+
+table tbody td {
+    color: var(--gray-500); 
+}
+
+table tbody tr {
+    padding-top: 25px;
+    padding-bottom: 25px;
+    font-size: 1.2rem;
+    font-weight: 200;
+    border-color: var(--gray-600);
+}
+
+svg {
+    fill: var(--gray-500);
+}
+
+svg:hover {
+    fill: var(--gray-200);
+}
+
 td a {
     text-decoration: none;
     font-weight: 400;
-    color: var(--gray-800); 
+    color: var(--gray-500); 
 }
 
 ul, ol {
@@ -86,32 +110,6 @@ button {
 button:hover {
     background-color: var(--gray-500);
     color: var(--gray-200);
-}
-
-table tbody tr {
-    padding-top: 25px;
-    padding-bottom: 25px;
-    font-size: 1.2rem;
-    font-weight: 200;
-}
-
-.loading {
-    position: fixed;
-    height: 100%;
-    width: 100%;
-    color: #fff;
-    background-color: var(--gray-800);
-    opacity: .5;
-    top: 0;
-    display: flex;
-    flex-direction: column;
-    justify-content:center;
-    align-items:center;
-    text-align: center;
-}
-
-.hidden {
-    display: none;
 }
 
 .max-width-outer {
