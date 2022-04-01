@@ -20,6 +20,7 @@ if (!isset($_SESSION['config'])) {
     $configFile->setFile(Config::$filename);
     $_SESSION['config'] = new Config();
     $_SESSION['config']->setConfig($configFile->getContent());
+    unset($configFile);
 }
 
 /* CHECK IF USERS FILE DB EXISTS OTHERWISE CREATE WITH DEFAULT VALUES */
@@ -64,14 +65,14 @@ if (isset($_GET['logout']) && isset($_SESSION['user']) && $_SESSION['user']->isL
 }
 
 /* FUNCTION OPEN A FOLDER */
-if (isset($_GET['open'])) {
+if (isset($_GET['open']) && isset($_SESSION['user']) && $_SESSION['user']->isLogged()) {
     if (!str_contains($_GET['open'], '../') && !str_contains($_GET['open'], './') && !str_contains($_GET['open'], '..')) {
         $_SESSION['user']->addLevel($_GET['open'] . '/');
     }
 }
 
 /* FUNCTION BACK A FOLDER LEVEL */
-if (isset($_GET['back'])) {
+if (isset($_GET['back']) && isset($_SESSION['user']) && $_SESSION['user']->isLogged() && $_SESSION['user']->countLevel() > 0) {
     $_SESSION['user']->backLevel();
 }
 

@@ -14,9 +14,7 @@ class Csv {
     }
 
     function getContent() {
-        if (!is_array($this->csvContent) || count($this->csvContent) <= 0 || $this->csvContent == null) {
-            $this->loadCsv();
-        }
+        $this->loadCsv();
         return $this->csvContent;
     }
 
