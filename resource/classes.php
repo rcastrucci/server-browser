@@ -212,8 +212,9 @@ class Config {
         return $this->subTitle;
     }
     function setConfig($csvContent) {
-        if (is_array($csvContent)) {
+        if (is_array($csvContent) && $csvContent) {
             foreach ($csvContent as $value) {
+                $value[0] ?? '';
                 if ($value[0] === 'title') {
                     $this->title = $value[1];
                 }
