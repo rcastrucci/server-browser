@@ -159,7 +159,6 @@ class User {
         $this->userName = null;
         $this->userEmail = null;
         $this->userPass = null;
-        session_destroy();
     }
     function getUserName() {
         return $this->userName;

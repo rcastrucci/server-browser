@@ -62,6 +62,7 @@ if (isset($_POST['u']) && isset($_POST['p'])) {
 /* REQUEST LOGOUT */
 if (isset($_GET['logout']) && isset($_SESSION['user']) && $_SESSION['user']->isLogged()) {
     $_SESSION['user']->logout();
+    unset($_SESSION['user']);
 }
 
 /* FUNCTION OPEN A FOLDER */
