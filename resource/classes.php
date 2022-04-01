@@ -213,18 +213,20 @@ class Config {
         return $this->subTitle;
     }
     function setConfig($csvContent) {
-        foreach ($csvContent as $value) {
-            if ($value[0] === 'title') {
-                $this->title = $value[1];
-            }
-            if ($value[0] === 'author') {
-                $this->author = $value[1];
-            }
-            if ($value[0] === 'description') {
-                $this->description = $value[1];
-            }
-            if ($value[0] === 'subtitle') {
-                $this->subTitle = $value[1];
+        if (is_array($csvContent)) {
+            foreach ($csvContent as $value) {
+                if ($value[0] === 'title') {
+                    $this->title = $value[1];
+                }
+                if ($value[0] === 'author') {
+                    $this->author = $value[1];
+                }
+                if ($value[0] === 'description') {
+                    $this->description = $value[1];
+                }
+                if ($value[0] === 'subtitle') {
+                    $this->subTitle = $value[1];
+                }
             }
         }
     }
