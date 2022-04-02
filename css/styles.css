@@ -283,7 +283,3 @@ button:hover {
     color: var(--gray-500);
     border-color: var(--gray-600);
 }
-
-.hide {
-    display: none;
-}

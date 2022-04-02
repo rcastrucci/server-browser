@@ -65,6 +65,7 @@ const btnMin = document.getElementById('btn_min');
 const btnMax = document.getElementById('btn_max');
 const buildingMsg = document.querySelectorAll('[building-msg]');
 const windowBtns = document.querySelectorAll('[data-hover]');
+const sectionWindow = document.querySelector('div.row > section');
 
 window.addEventListener('resize', function(event) {
     setWindowContentSize(windowSize, divWindow, 200);
@@ -144,12 +145,14 @@ if ((ms !== null) && (mt !== null)) {
     divWindow.style.left = ms;
     divWindow.style.top  = mt;
 } else {
+    /* As it is first time loading window frame it can not wait to load completly */
+    sectionWindow.classList.remove('d-none');
     offset = centerElement(divWindow);
     divWindow.style.left = (offset[0]) + 'px';
     divWindow.style.top  = (offset[1]) + 'px';
 }
 
 window.onload = () => {
-    const sectionWindow = document.querySelector('div.row > section');
+    /* Waits to load html to avoid frame window blink while javascript is changing and adjusting its position */
     sectionWindow.classList.remove('d-none');
 }
