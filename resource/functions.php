@@ -87,18 +87,24 @@ if(isset($_REQUEST["file"]) && $_SESSION['user']->isLogged()) {
     // Process download if it is not a directory
     if(file_exists($filepath) && !(is_dir($filepath))) {
         header('Content-Description: File Transfer');
-        header('Content-Type: application/octet-stream');
-        header('Content-Disposition: attachment; filename='.basename($filepath));
-        header('Content-Transfer-Encoding: Binary'); 
-        header('Expires: 0');
-        header('Cache-Control: must-revalidate');
-        header('Pragma: public');
-        header('Content-Length: ' . filesize($filepath));
-        flush(); // Flush system output buffer
-        readfile($filepath);
-        die();
+        if (str_contains($file, '.zip')) {
+            header('Location: '.$filepath);
+            die();
+        } else {
+            header('Content-Type: application/octet-stream');
+            header('Content-Disposition: attachment; filename='.basename($filepath));
+            header('Content-Transfer-Encoding: Binary'); 
+            header('Expires: 0');
+            header('Cache-Control: must-revalidate');
+            header('Pragma: public');
+            header('Content-Length: ' . filesize($filepath));
+            flush(); // Flush system output buffer
+            readfile($filepath);
+            die();
+        }
     } else if (is_dir($filepath)) {
         http_response_code(403);
+        die();
     } else {
         http_response_code(404);
         die();
