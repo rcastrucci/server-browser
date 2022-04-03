@@ -72,7 +72,8 @@ window.addEventListener('resize', function(event) {
 }, true);
 
 btnClose.onclick = () => {
-    window.location = 'index.php?logout';
+    /* window.location = 'index.php?logout'; */
+    sectionWindow.classList.add('d-none');
 }
 
 btnMin.onclick = () => {

@@ -20,13 +20,14 @@ include('./resource/head.php');
                         </div>
                         <!-- PATH AND BACK BUTTON -->
                         <div class="d-flex flex-row justify-content-center align-items-center">
-                            <span class="px-2 me-4"><?PHP echo($_SESSION['user']->getUserName()) ?>: <?PHP echo($_SESSION['user']->getPath()); ?></span>
                             <?PHP if ($_SESSION['user']->countLevel() > 0) {
                                 ?>
+                                <a href="index.php?back"> <span class="px-2 me-4"><?PHP echo($_SESSION['user']->getUserName()); ?>: <?PHP echo($_SESSION['user']->getPath()); ?></span> </a>
                                 <a href="index.php?back"><img class="px-2 icon" src="./images/icon_back.png" alt="back"></a>
                                 <?PHP
                             } else {
                                 ?>
+                                <span class="px-2 me-4"><?PHP echo($_SESSION['user']->getUserName()); ?>: <?PHP echo($_SESSION['user']->getPath()); ?></span>
                                 <img class="px-2 icon-disabled" src="./images/icon_back.png" alt="back">
                                 <?PHP
                             } ?>
@@ -44,7 +45,7 @@ include('./resource/head.php');
                             <span class="ms-3">Size</span>
                         </div>
                         <div class="col-2">
-                            <span class="ms-3">Actions</span>
+                            <span class="ms-3">Action</span>
                         </div>
                     </div>
                     <!-- CONTENT -->
@@ -62,11 +63,27 @@ include('./resource/head.php');
                                         $SIZE = 0;
                                         $ICON = 'icon_folder.png';
                                         $ALT = 'folder';
+                                        $ACTION = 'icon_open.png';
+                                        $ACTION_ALT = 'open';
+                                        $LINK = 'index.php?open=';
                                     }
                                     else {
                                         $SIZE = round(filesize($_SESSION['user']->getLevel() . $filename) / 1024 / 1024, 1);
-                                        $ICON = 'icon_jpg.png';
+                                        if (str_contains(strtolower($filename), '.jpg') || str_contains(strtolower($filename), '.jpeg') || str_contains(strtolower($filename), '.png')) {
+                                            $ICON = 'icon_jpg.png';
+                                        } else if (str_contains(strtolower($filename), '.tif') || str_contains(strtolower($filename), '.tiff')) {
+                                            $ICON = 'icon_tiff.png';
+                                        } else if (str_contains(strtolower($filename), '.zip') || str_contains(strtolower($filename), '.gzip')) {
+                                            $ICON = 'icon_zip.png';
+                                        } else if (str_contains(strtolower($filename), '.txt') || str_contains(strtolower($filename), '.rtf')) {
+                                            $ICON = 'icon_txt.png';
+                                        } else {
+                                            $ICON = 'icon_txt.png';
+                                        }
                                         $ALT = 'file';
+                                        $ACTION = 'icon_cloud.png';
+                                        $ACTION_ALT = 'download';
+                                        $LINK = 'index.php?file=';
                                     }
 
                                     /* CHECK SIZE AND FORMAT GB or MB */
@@ -79,7 +96,7 @@ include('./resource/head.php');
                                     ?>
                                     <!-- CONTENT ROW -->
                                     <div class="d-flex flex-row align-items-center col-12 px-2">
-                                        <a href="index.php?open=<?PHP echo($filename); ?>" class="col-5 d-flex flex-row align-items-center py-2">
+                                        <a href="<?PHP echo($LINK . $filename); ?>" class="col-5 d-flex flex-row align-items-center py-2">
                                             <div class="d-flex flex-row justify-content-center icon-box">
                                                 <img class="icon-content" src="./images/<?PHP echo($ICON); ?>" alt="<?PHP echo($ALT); ?>">
                                             </div>
@@ -92,12 +109,12 @@ include('./resource/head.php');
                                             <span class="ms-3"><?PHP echo($SIZE); ?></span>
                                         </div>
 
+                                        <!-- ACTION BUTTONS -->
                                         <div class="col-2 d-flex flex-row justify-content-evenly">
-                                            <a href="index.php?open=<?PHP echo($filename); ?>">
-                                                <img class="icon" src="./images/icon_open.png" alt="open">
-                                            </a>
-                                            <img class="icon" src="./images/icon_cloud.png" alt="download">
-                                            <img class="icon" src="./images/icon_trash.png" alt="delete">
+                                            <a href="index.php?open=<?PHP echo($filename); ?>"> <img class="icon" src="./images/<?PHP echo($ACTION); ?>" alt="<?PHP echo($ACTION_ALT); ?>" title="<?PHP echo(ucfirst($ACTION_ALT)); ?>"> </a>
+                                            <?PHP if ($_SESSION['user']->getUserName() === 'admin') { ?>
+                                            <a href="index.php?erase=<?PHP echo($filename); ?>"> <img class="icon" src="./images/icon_trash.png" alt="delete" title="Delete"> </a>
+                                            <?PHP } ?>
                                         </div>
                                     </div>
                                     <!-- END CONTENT ROW -->
@@ -121,8 +138,8 @@ include('./resource/head.php');
     <section class="top-bar">
         <span><?PHP echo($_SESSION['config']->getTitle()); ?></span>
         <div>
-            <img class="px-2 icon" src="./images/icon_account.png" alt="User Account">
-            <img class="px-2 icon" src="./images/icon_off.png" alt="Logoff">
+            <img id="btn_account" class="px-2 icon" src="./images/icon_account.png" alt="User Account" title="Account">
+            <a href="index.php?logout"><img class="px-2 icon" src="./images/icon_off.png" alt="Logoff" title="Logout"></a>
         </div>
     </section>
 

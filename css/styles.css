@@ -201,6 +201,10 @@ button:hover {
     font-size: 1.2rem;
 }
 
+.window-head > div {
+    min-width: 90px;
+}
+
 .window-labels {
     min-height: 30px;
     display: flex;
