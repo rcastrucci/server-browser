@@ -111,7 +111,7 @@ include('./resource/head.php');
 
                                         <!-- ACTION BUTTONS -->
                                         <div class="col-2 d-flex flex-row justify-content-evenly">
-                                            <a href="index.php?open=<?PHP echo($filename); ?>"> <img class="icon" src="./images/<?PHP echo($ACTION); ?>" alt="<?PHP echo($ACTION_ALT); ?>" title="<?PHP echo(ucfirst($ACTION_ALT)); ?>"> </a>
+                                            <a href="<?PHP echo($LINK . $filename); ?>"> <img class="icon" src="./images/<?PHP echo($ACTION); ?>" alt="<?PHP echo($ACTION_ALT); ?>" title="<?PHP echo(ucfirst($ACTION_ALT)); ?>"> </a>
                                             <?PHP if ($_SESSION['user']->getUserName() === 'admin') { ?>
                                             <a href="index.php?erase=<?PHP echo($filename); ?>"> <img class="icon" src="./images/icon_trash.png" alt="delete" title="Delete"> </a>
                                             <?PHP } ?>
