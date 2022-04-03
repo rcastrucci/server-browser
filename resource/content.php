@@ -7,7 +7,6 @@ include('./resource/head.php');
     <div class="container-fluid">
         <div class="row">
             <section class="d-flex flex-column pt-bar px-4 px-sm-5 px-md-0 d-none">
-
                 <!-- WINDOW CONTAINER -->
                 <div class="window-container col-12 col-sm-12 col-md-9 col-lg-7 col-xl-6 max-width-outer">
                     <!-- HEAD -->
@@ -55,6 +54,7 @@ include('./resource/head.php');
                         $files = $_SESSION['user']->getFiles();
                         if ($files) {
                             foreach ($files as $filename) {
+                                $READER = false;
                                 /* LIST FILES EXCEPT SYSTEM FILES */
                                 if ($filename !== '.' && $filename !== '..' && $filename[0] !== '.') {
                                     /* CHECK IF IT IS DIRECTORY OR A FILE */
@@ -75,8 +75,9 @@ include('./resource/head.php');
                                             $ICON = 'icon_tiff.png';
                                         } else if (str_contains(strtolower($filename), '.zip') || str_contains(strtolower($filename), '.gzip')) {
                                             $ICON = 'icon_zip.png';
-                                        } else if (str_contains(strtolower($filename), '.txt') || str_contains(strtolower($filename), '.rtf')) {
+                                        } else if (str_contains(strtolower($filename), '.txt') || str_contains(strtolower($filename), '.rtf') || str_contains(strtolower($filename), '.doc')) {
                                             $ICON = 'icon_txt.png';
+                                            $READER = true;
                                         } else {
                                             $ICON = 'icon_txt.png';
                                         }
@@ -112,6 +113,13 @@ include('./resource/head.php');
                                         <!-- ACTION BUTTONS -->
                                         <div class="col-2 d-flex flex-row justify-content-evenly">
                                             <a href="<?PHP echo($LINK . $filename); ?>"> <img class="icon" src="./images/<?PHP echo($ACTION); ?>" alt="<?PHP echo($ACTION_ALT); ?>" title="<?PHP echo(ucfirst($ACTION_ALT)); ?>"> </a>
+                                            <?PHP
+                                            if ($READER) {
+                                                $ACTION = 'icon_open.png';
+                                                $ACTION_ALT = 'read file';
+                                                $LINK = 'index.php?read='; ?>
+                                                <a href="<?PHP echo($LINK . $filename); ?>"> <img class="icon" src="./images/<?PHP echo($ACTION); ?>" alt="<?PHP echo($ACTION_ALT); ?>" title="<?PHP echo(ucfirst($ACTION_ALT)); ?>"> </a>
+                                            <?PHP } ?>
                                             <?PHP if ($_SESSION['user']->getUserName() === 'admin') { ?>
                                             <a href="index.php?erase=<?PHP echo($filename); ?>"> <img class="icon" src="./images/icon_trash.png" alt="delete" title="Delete"> </a>
                                             <?PHP } ?>
@@ -129,7 +137,43 @@ include('./resource/head.php');
                     <!-- END CONTENT -->
                 </div>
                 <!-- END WINDOW CONTAINER -->
+                <?PHP
+                if (isset($_GET['read']) && file_exists($realPath = $_SESSION['user']->getUserFolder() . $_SESSION['user']->getPath() . $_GET['read'])) {
+                    $fileToRead = new FileReader();
+                    $fileToRead->setFile($realPath);
+                ?>
+                    <!-- WINDOW CONTAINER READ FILES -->
+                    <div id="windowReader" class="window-container col-12 col-sm-12 col-md-9 col-lg-7 col-xl-6 max-width-outer">
+                        <!-- HEAD -->
+                        <div id="headReader" class="window-head">
+                            <!-- WINDOW BUTTONS -->
+                            <div>
+                                <img id="btn_close_reader" class="px-2 btn-icon" src="./images/icon_close.png" alt="close" data-hover="./images/icon_close_hover.png">
+                                <img id="btn_min_reader" class="px-2 btn-icon" src="./images/icon_min.png" alt="minimize" data-hover="./images/icon_min_hover.png">
+                                <img id="btn_max_reader" class="px-2 btn-icon" src="./images/icon_max.png" alt="maximize" data-hover="./images/icon_max_hover.png">
+                            </div>
+                            <!-- PATH AND BACK BUTTON -->
+                            <div class="d-flex flex-row justify-content-center align-items-center">
+                                <span class="px-2 me-4"><?PHP echo($fileToRead->getFile()); ?></span>
+                            </div>
+                        </div>
 
+                        <!-- CONTENT -->
+                        <div class="window-content d-flex flex-column mt-4">
+                            <!-- CONTENT ROW -->
+                            <section class="d-flex flex-row align-items-center col-12 px-2">
+                                <div class="col-12 ps-2">
+                                    <div><?PHP $fileToRead->read(); ?></div>
+                                </div>
+                            </section>
+                            <!-- END CONTENT ROW -->
+                        </div>
+                        <!-- END CONTENT -->
+                    </div>
+                    <!-- END WINDOW CONTAINER -->
+                <?PHP
+                }
+                ?>
             </section>
         </div>
     </div>

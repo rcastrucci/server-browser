@@ -56,6 +56,8 @@ const mt = urlGet.searchParams.get("mt");
 const ws = urlGet.searchParams.get("ws");
 const divWindowHead = document.querySelector('.window-head');
 const divWindow = document.querySelector('.window-container');
+const headReader = document.getElementById('headReader');
+const windowReader = document.getElementById('windowReader');
 let windowSize = 50;
 let mousePosition;
 let offset;
@@ -63,6 +65,11 @@ let isDown = false;
 const btnClose = document.getElementById('btn_close');
 const btnMin = document.getElementById('btn_min');
 const btnMax = document.getElementById('btn_max');
+
+const btnCloseReader = document.getElementById('btn_close_reader');
+const btnMinReader = document.getElementById('btn_min_reader');
+const btnMaxReader = document.getElementById('btn_max_reader');
+
 const buildingMsg = document.querySelectorAll('[building-msg]');
 const windowBtns = document.querySelectorAll('[data-hover]');
 const sectionWindow = document.querySelector('div.row > section');
@@ -72,7 +79,6 @@ window.addEventListener('resize', function(event) {
 }, true);
 
 btnClose.onclick = () => {
-    /* window.location = 'index.php?logout'; */
     sectionWindow.classList.add('d-none');
 }
 
@@ -86,6 +92,24 @@ btnMax.onclick = () => {
     else windowSize = 50;
     setWindowContentSize(windowSize, divWindow, 200);
 }
+
+if (windowReader) {
+    btnCloseReader.onclick = () => {
+        windowReader.remove();
+    }
+
+    btnMinReader.onclick = () => {
+        setWindowContentSize(windowSize = 50, windowReader, 200);
+    }
+
+    btnMaxReader.onclick = () => {
+        if (windowSize === 50) windowSize = 90;
+        else if (windowSize === 90) windowSize = 100;
+        else windowSize = 50;
+        setWindowContentSize(windowSize, windowReader, 200);
+    }
+}
+
 
 /* WINDOW BUTTONS HOVER */
 windowBtns.forEach(element => {
@@ -111,11 +135,28 @@ buildingMsg.forEach(element => element.addEventListener('click', () => {
 
 divWindowHead.addEventListener('mousedown', function(e) {
     isDown = true;
-    offset = [
-        divWindow.offsetLeft - e.clientX,
-        divWindow.offsetTop - e.clientY
-    ];
+    if (headReader) {
+        offset = [
+            windowReader.offsetLeft - e.clientX,
+            windowReader.offsetTop - e.clientY
+        ];
+    } else {
+        offset = [
+            divWindow.offsetLeft - e.clientX,
+            divWindow.offsetTop - e.clientY
+        ];
+    }
 }, true);
+
+if (headReader) {
+    headReader.addEventListener('mousedown', function(e) {
+        isDown = true;
+        offset = [
+            windowReader.offsetLeft - e.clientX,
+            windowReader.offsetTop - e.clientY
+        ];
+    }, true);
+}
 
 document.addEventListener('mouseup', function() {
     isDown = false;
@@ -128,8 +169,13 @@ document.addEventListener('mousemove', function(event) {
             x : event.clientX,
             y : event.clientY
         };
-        divWindow.style.left = (mousePosition.x + offset[0]) + 'px';
-        divWindow.style.top  = (mousePosition.y + offset[1]) + 'px';
+        if (headReader) {
+            windowReader.style.left = (mousePosition.x + offset[0]) + 'px';
+            windowReader.style.top  = (mousePosition.y + offset[1]) + 'px';
+        } else {
+            divWindow.style.left = (mousePosition.x + offset[0]) + 'px';
+            divWindow.style.top  = (mousePosition.y + offset[1]) + 'px';
+        }
     }
 }, true);
 

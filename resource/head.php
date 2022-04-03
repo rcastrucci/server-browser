@@ -1,3 +1,11 @@
+<!--
+CREDITS
+FullStack Developer r.CASTRUCCi
+https://dev.rcastrucci.com
+https://github.com/rcastrucci
+Git repository: server-browser.git
+-->
+
 <!DOCTYPE html>
 <html lang="en-us">
 

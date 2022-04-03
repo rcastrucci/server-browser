@@ -180,6 +180,26 @@ class User {
     }
 }
 
+class FileReader {
+    private $filename;
+
+    function setFile($filename) {
+        $this->filename = $filename;
+        return file_exists($filename);
+    }
+    function getFile() {
+        return $this->filename;
+    }
+
+    function read() {
+        $fileRead = fopen($this->filename,'r');
+        while ($line = fgets($fileRead)) {
+            echo($line.'<br>');
+        }
+        fclose($fileRead);
+    }
+}
+
 class Config {
     public static $filename = '.config.csv';
     private $author;
