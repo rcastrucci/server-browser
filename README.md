@@ -1,4 +1,6 @@
-# Server Browser
+# Server Browser 
+
+### (Linux server)
 
 **This repository is about to share server files with clients or authorized users. Giving them credentials and specifying which folders they can access. Is perfect to share documents, images and large files through your own server.**
 
