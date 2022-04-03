@@ -214,19 +214,21 @@ class Config {
     function setConfig($csvContent) {
         if (is_array($csvContent) && $csvContent) {
             foreach ($csvContent as $value) {
-                $value[0] ?? '';
-                if ($value[0] === 'title') {
-                    $this->title = $value[1];
-                }
-                if ($value[0] === 'author') {
-                    $this->author = $value[1];
-                }
-                if ($value[0] === 'description') {
-                    $this->description = $value[1];
-                }
-                if ($value[0] === 'subtitle') {
-                    $this->subTitle = $value[1];
-                }
+		if ($value) {
+                    $value[0] ?? '';
+                    if ($value[0] === 'title') {
+                        $this->title = $value[1];
+                    }
+                    if ($value[0] === 'author') {
+                        $this->author = $value[1];
+                    }
+                    if ($value[0] === 'description') {
+                        $this->description = $value[1];
+                    }
+                    if ($value[0] === 'subtitle') {
+                        $this->subTitle = $value[1];
+                    }
+		}
             }
         }
     }
