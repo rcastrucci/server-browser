@@ -74,7 +74,9 @@ include('./resource/head.php');
                                         } else if (str_contains(strtolower($filename), '.tif') || str_contains(strtolower($filename), '.tiff')) {
                                             $ICON = 'icon_tiff.png';
                                         } else if (str_contains(strtolower($filename), '.zip') || str_contains(strtolower($filename), '.gzip')) {
-                                            $ICON = 'icon_zip.png';
+                                            $ICON = 'icon_zip.png'; }
+                                        else if (str_contains(strtolower($filename), '.mp4') || str_contains(strtolower($filename), '.mov')) {
+                                                $ICON = 'icon_mp4.png';
                                         } else if (str_contains(strtolower($filename), '.txt') || str_contains(strtolower($filename), '.rtf') || str_contains(strtolower($filename), '.doc')) {
                                             $ICON = 'icon_txt.png';
                                             $READER = true;
